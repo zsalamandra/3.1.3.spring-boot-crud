@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" xmlns:a="http://www.w3.org/1999/html"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title> Current User </title>
+
+</head>
+<body>
+
+<header th:insert="main-page-header::header"></header>
+
+<div class="wrapper" >
+    <div class="container-fluid" style="margin-top: 10px; padding: 0px">
+        <div class="row container" style="margin: 0px; padding: 0px; min-width: 100%">
+            <div class="col-md-3 col-xl-2" style="background: white; padding: 0px; height: 90vh">
+                <div class="list-group list-group-flush">
+                    <p class="list-group-item active" data-toggle="pill">USER</p>
+                </div>
+            </div>
+            <div class="col-md-9 col-xl-10 " style="background: #f8f9fb">
+
+                <!--                USER INFORMATION PAGE-->
+                <div id="userinfopage" class="container" style="padding: 0px; min-width: 100%">
+                    <div class="panel-heading">
+                        <h4> User information-page </h4>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <p class="text-muted">All users</p>
+                        </div>
+                        <table class="table table-striped table-hover" style="background: #ffffff">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Roles</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <!--                                                            ID-->
+                                <td th:text="${currentuser.id}"></td>
+
+                                <td th:text="${currentuser.name}">user </td>
+
+                                <td>
+                                    <th:block th:each="role : ${currentuser.getRoles()}">
+                                        <a th:text="${role.name()}"></a>
+                                    </th:block>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
