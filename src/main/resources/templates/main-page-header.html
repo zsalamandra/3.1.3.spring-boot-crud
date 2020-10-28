@@ -1,0 +1,24 @@
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <label class="font-weight-bold"
+                       style="color: aqua; padding-right: 10px"
+                       th:text="${authentication.getName()}"></label>
+
+                <label class="text-md-left"
+                       style="color: white; padding-right: 10px">with roles:</label>
+
+                <label class="text-md-left font-weight-bold"
+                       style="color: white"
+                       th:text="${#strings.replace(#strings.listJoin(authentication.getAuthorities(),', '),'ROLE_', '')}"></label>
+            </div>
+
+        </div>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <form class="form-inline my-2 my-lg-0" action="/auth/logout" method="POST">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+</div>
