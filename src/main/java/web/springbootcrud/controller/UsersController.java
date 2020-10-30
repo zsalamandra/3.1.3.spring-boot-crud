@@ -26,13 +26,13 @@ public class UsersController {
     @GetMapping(value = "/adm/users")
     public String index(Model model, Authentication authentication) {
         model.addAttribute("authentication", authentication);
-        User user = userService.getUserByName(authentication.getName());
-        model.addAttribute("currentuser", user);
+//        User user = userService.getUserByName(authentication.getName());
+//        model.addAttribute("currentuser", user);
 //        передается новоиспеченный пользователь, данный пользователь будет получен
 //                в методе POST для сохранения
-        model.addAttribute("newuser", new User());
+//        model.addAttribute("newuser", new User());
 //        передаем всех юзеров для отображения в таблице
-        model.addAttribute("users", userService.listUsers());
+//        model.addAttribute("users", userService.listUsers());
         return "users";
     }
 

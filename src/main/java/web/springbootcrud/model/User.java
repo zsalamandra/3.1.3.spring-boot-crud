@@ -15,7 +15,7 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", unique = true, nullable = false, length = 50)
@@ -24,7 +24,7 @@ public class User implements UserDetails {
     @Column(name = "password", length = 8)
     private String password;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "users_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

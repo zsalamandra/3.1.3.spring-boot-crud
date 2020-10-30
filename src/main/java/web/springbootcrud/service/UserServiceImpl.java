@@ -27,7 +27,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return userDao.getOne(id);
+        User user = userDao.getOne(id);
+        User retUser = new User(
+                user.getId(),
+                user.getName(),
+                user.getPassword(),
+                user.getRoles()
+        );
+        return retUser;
     }
 
     @Override

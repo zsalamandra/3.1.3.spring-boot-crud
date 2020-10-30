@@ -2,16 +2,16 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
             <div class="navbar-header">
-                <label class="font-weight-bold"
-                       style="color: aqua; padding-right: 10px"
-                       th:text="${authentication.getName()}"></label>
+                <label class="font-weight-bold" id="user-name-on-navbar"
+                       style="color: aqua; padding-right: 10px">
+                </label>
 
                 <label class="text-md-left"
                        style="color: white; padding-right: 10px">with roles:</label>
 
-                <label class="text-md-left font-weight-bold"
-                       style="color: white"
-                       th:text="${#strings.replace(#strings.listJoin(authentication.getAuthorities(),', '),'ROLE_', '')}"></label>
+                <label class="text-md-left font-weight-bold" id="user-roles-on-navbar"
+                       style="color: white">
+                </label>
             </div>
 
         </div>
