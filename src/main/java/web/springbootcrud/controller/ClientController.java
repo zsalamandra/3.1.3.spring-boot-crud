@@ -21,7 +21,7 @@ public class ClientController {
         this.service = service;
     }
 
-    @GetMapping(value = "/adm/restapi/current-user")
+    @GetMapping(value = "/api/v1/current-user")
     public ResponseEntity<User> index(Authentication authentication) {
         User user = service.getUserByName(authentication.getName());
         return authentication != null ?
@@ -29,21 +29,21 @@ public class ClientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(value = "/adm/restapi/users")
+    @PostMapping(value = "/api/v1/users")
     public ResponseEntity<?> create(@RequestBody User user) {
         service.addUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/adm/restapi/users")
-    public ResponseEntity<List<User>> read() {
+    @GetMapping(value = "/api/v1/users")
+    public ResponseEntity<List<User>> readAll() {
         final List<User> users = service.listUsers();
         return users != null &&  !users.isEmpty()
                 ? new ResponseEntity<>(users, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/adm/restapi/users/{id}")
+    @GetMapping(value = "/api/v1/users/{id}")
     public ResponseEntity<User> read(@PathVariable(name = "id") Long id) {
         User user = service.getUserById(id);
         return user != null
@@ -51,7 +51,7 @@ public class ClientController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/adm/restapi/users/{id}")
+    @PutMapping(value = "/api/v1/users/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody User user) {
         user.setId(id);
         service.addUser(user);
@@ -59,7 +59,7 @@ public class ClientController {
     }
 
 
-    @DeleteMapping(value = "/adm/restapi/users/{id}")
+    @DeleteMapping(value = "/api/v1/users/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
         service.removeUser(id);
         return new ResponseEntity<>(HttpStatus.OK);

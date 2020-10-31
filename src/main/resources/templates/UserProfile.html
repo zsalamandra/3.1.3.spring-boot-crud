@@ -46,17 +46,8 @@
                             </thead>
                             <tbody>
 
-                            <tr>
-                                <!--                                                            ID-->
-                                <td th:text="${currentuser.id}"></td>
+                            <tr id="uip_row">
 
-                                <td th:text="${currentuser.name}">user </td>
-
-                                <td>
-                                    <th:block th:each="role : ${currentuser.getRoles()}">
-                                        <a th:text="${role.name()}"></a>
-                                    </th:block>
-                                </td>
                             </tr>
                             </tbody>
 

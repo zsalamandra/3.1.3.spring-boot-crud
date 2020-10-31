@@ -1,6 +1,6 @@
 async function readToTable(){
     document.getElementById("row-data").innerText = "";
-    await fetch('/adm/restapi/users')
+    await fetch('/api/v1/users')
         .then(response => response.json())
         .then(users => {
             users.forEach(
@@ -29,7 +29,7 @@ async function readToTable(){
 function readToModal(id){
     $('#editID').val(id);
 
-    let urlFoFetch = '/adm/restapi/users/' + id;
+    let urlFoFetch = '/api/v1/users/' + id;
     fetch(urlFoFetch)
         .then(response => response.json())
         .then(user => {
@@ -63,7 +63,7 @@ async function addUser(){
     });
     console.log(jsonString);
 
-    let urlFoFetch = '/adm/restapi/users';
+    let urlFoFetch = '/api/v1/users';
     await fetch(urlFoFetch, {
         method: 'POST',
         headers: {
@@ -93,7 +93,7 @@ async function editUser(id) {
 
     });
     console.log(jsonString);
-    let urlFoFetch = '/adm/restapi/users/' + id;
+    let urlFoFetch = '/api/v1/users/' + id;
     await fetch(urlFoFetch, {
         method: 'PUT',
         headers: {
@@ -103,12 +103,17 @@ async function editUser(id) {
     });
 }
 
+
+
+
 function deleteUser(id){
-    let urlFoFetch = '/adm/restapi/users/' + id;
+    let urlFoFetch = '/api/v1/users/' + id;
     fetch(urlFoFetch, {
         method: 'DELETE'
     });
 }
+
+
 
 function modalCmdButtonHandler(){
     const cmdType = $("#modal-cmd-button").data('method');
@@ -120,7 +125,7 @@ function modalCmdButtonHandler(){
 
 
 function readNavBarData() {
-    let urlFoFetch = '/adm/restapi/current-user';
+    let urlFoFetch = '/api/v1/current-user';
     fetch(urlFoFetch)
         .then(response => response.json())
         .then(user => {
