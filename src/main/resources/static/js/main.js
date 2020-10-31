@@ -7,13 +7,13 @@ async function readToTable(){
                 user =>
                 {
                     let roles = Array.from(user.roles)
-                        .map(role => role.name).join(', ');
+                        .map(role => role.name.substring(5)).join(', ');
 
                     let rowStr = $('<tr>' +
                         '<td>' + user.id +       '</td>' +
                         '<td>' + user.username + '</td>' +
                         '<td>' + user.password + '</td>' +
-                        '<td>' + roles +    '</td>' +
+                        '<td>' + roles +         '</td>' +
                         '<td> <a class="btn btn-outline-info" data-user-id=' + user.id + ' data-method="edit" data-toggle="modal" data-target="#showModal">Edit </a></td>' +
                         '<td> <a class="btn btn-outline-danger" data-user-id=' + user.id + ' data-method="delete"  data-toggle="modal" data-target="#showModal">Delete</a> </td>'
                     );
@@ -22,6 +22,9 @@ async function readToTable(){
             )
         });
 }
+
+
+
 
 function readToModal(id){
     $('#editID').val(id);
@@ -35,7 +38,7 @@ function readToModal(id){
             user.roles.forEach(
                 role =>
                 {
-                    let roleName = role.name;
+                    let roleName = role.name.substring(5);
                     console.log(roleName);
                     let selectorQuery = '#editRoleSelector option:contains(' + roleName + ')';
                     $(selectorQuery).prop('selected', true);
@@ -43,6 +46,9 @@ function readToModal(id){
 
         })
 }
+
+
+
 
 async function addUser(){
     const username = $('#nu-name').val();
@@ -52,9 +58,11 @@ async function addUser(){
     // Подготовка JSON запроса
     const jsonString = JSON.stringify({
         name: username,
-        password: password
+        password: password,
+        roles: roles
     });
     console.log(jsonString);
+
     let urlFoFetch = '/adm/restapi/users';
     await fetch(urlFoFetch, {
         method: 'POST',
@@ -65,6 +73,12 @@ async function addUser(){
     });
     await readToTable();
 }
+
+
+
+
+
+
 
 async function editUser(id) {
     const username = $('#editUserName').val();
@@ -102,6 +116,9 @@ function modalCmdButtonHandler(){
     (cmdType == 'edit') ? editUser(userId) : deleteUser(userId);
 }
 
+
+
+
 function readNavBarData() {
     let urlFoFetch = '/adm/restapi/current-user';
     fetch(urlFoFetch)
@@ -109,16 +126,20 @@ function readNavBarData() {
         .then(user => {
             console.log(user);
             $('#user-name-on-navbar').html(user.name);
-            $('#user-roles-on-navbar').html(user.authorities.join(', '));
+            let roles = user.roles.map(item => item.name.substring(5)).join(', ');
+            $('#user-roles-on-navbar').html(roles);
 
             let rowStr = $('<tr>' +
-                '<td>' + user.principal.id + '</td>' +
+                '<td>' + user.id + '</td>' +
                 '<td>' + user.name + '</td>' +
-                '<td>' + user.authorities.join(', ') + '</td>'
+                '<td>' + roles + '</td>'
             );
             $('#user-info_table').append(rowStr);
         })
 }
+
+
+
 
 jQuery(function () {
     // чтение всей таблицы
@@ -145,7 +166,7 @@ jQuery(function () {
 })
 
 function getSelectedItems(select){
-    return Array.from(roles.options)
+    return Array.from(select.options)
         .filter(item => item.selected)
-        .map(item => ({name: item.value}))
+        .map(item => ({name: 'ROLE_' + item.value}))
 }

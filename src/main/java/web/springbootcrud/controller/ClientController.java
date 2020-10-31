@@ -22,9 +22,10 @@ public class ClientController {
     }
 
     @GetMapping(value = "/adm/restapi/current-user")
-    public ResponseEntity<Authentication> index(Authentication authentication) {
+    public ResponseEntity<User> index(Authentication authentication) {
+        User user = service.getUserByName(authentication.getName());
         return authentication != null ?
-                new ResponseEntity<>(authentication, HttpStatus.OK) :
+                new ResponseEntity<>(user, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
