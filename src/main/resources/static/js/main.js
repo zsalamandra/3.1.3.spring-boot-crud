@@ -6,11 +6,14 @@ async function readToTable(){
             users.forEach(
                 user =>
                 {
+                    let roles = Array.from(user.roles)
+                        .map(role => role.name).join(', ');
+
                     let rowStr = $('<tr>' +
                         '<td>' + user.id +       '</td>' +
                         '<td>' + user.username + '</td>' +
                         '<td>' + user.password + '</td>' +
-                        '<td>' + user.roles +    '</td>' +
+                        '<td>' + roles +    '</td>' +
                         '<td> <a class="btn btn-outline-info" data-user-id=' + user.id + ' data-method="edit" data-toggle="modal" data-target="#showModal">Edit </a></td>' +
                         '<td> <a class="btn btn-outline-danger" data-user-id=' + user.id + ' data-method="delete"  data-toggle="modal" data-target="#showModal">Delete</a> </td>'
                     );
@@ -32,7 +35,7 @@ function readToModal(id){
             user.roles.forEach(
                 role =>
                 {
-                    let roleName = role.name.substring(5);
+                    let roleName = role.name;
                     console.log(roleName);
                     let selectorQuery = '#editRoleSelector option:contains(' + roleName + ')';
                     $(selectorQuery).prop('selected', true);
@@ -49,8 +52,7 @@ async function addUser(){
     // Подготовка JSON запроса
     const jsonString = JSON.stringify({
         name: username,
-        password: password,
-        roles: roles
+        password: password
     });
     console.log(jsonString);
     let urlFoFetch = '/adm/restapi/users';
@@ -74,6 +76,7 @@ async function editUser(id) {
         name: username,
         password: password,
         roles: roles
+
     });
     console.log(jsonString);
     let urlFoFetch = '/adm/restapi/users/' + id;
@@ -142,7 +145,7 @@ jQuery(function () {
 })
 
 function getSelectedItems(select){
-    return Array.from(select.options)
-        .filter(option => option.selected)
-        .map(option => option.text);
+    return Array.from(roles.options)
+        .filter(item => item.selected)
+        .map(item => ({name: item.value}))
 }

@@ -30,7 +30,7 @@ public class ClientController {
 
     @PostMapping(value = "/adm/restapi/users")
     public ResponseEntity<?> create(@RequestBody User user) {
-        service.addUser(user, new String[]{"USER"});
+        service.addUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -53,7 +53,7 @@ public class ClientController {
     @PutMapping(value = "/adm/restapi/users/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody User user) {
         user.setId(id);
-        service.addUser(user, new String[]{"USER"});
+        service.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

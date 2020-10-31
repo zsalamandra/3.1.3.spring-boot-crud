@@ -34,21 +34,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/adm/**").permitAll()
-                .antMatchers("/UserProfile/**").hasAnyAuthority("ADMIN", "USER")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth/login").permitAll()   //при авторизации открывается указанная страница
-                .successHandler(successUserHandler)
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/auth/login");
+//                .antMatchers("/adm/**").hasRole("ADMIN")
+                .antMatchers("/adm/**").permitAll();
+//                .antMatchers("/UserProfile/**").hasAnyAuthority("ADMIN", "USER")
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/auth/login").permitAll()   //при авторизации открывается указанная страница
+//                .successHandler(successUserHandler)
+//                .and()
+//                .logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+//                .invalidateHttpSession(true)
+//                .clearAuthentication(true)
+//                .deleteCookies("JSESSIONID")
+//                .logoutSuccessUrl("/auth/login");
     }
 
     @Override

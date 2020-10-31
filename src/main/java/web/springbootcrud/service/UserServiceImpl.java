@@ -19,18 +19,18 @@ public class UserServiceImpl implements UserService {
         this.roleDao = roleDao;
     }
 
-    private void assignRolesToUser(User user, String[] roles){
+    private void createCyclicReference(User user){
         Set<Role> userRoles = new HashSet<>();
-        for (String role: roles){
-            Role userRole = roleDao.findByName(role);
-
+        for (Role role: user.getRoles()){
+            Long id = roleDao.findByName(role.getName()).getId();
+            userRoles.add(new Role(id, role.getName(), user));
         }
         user.setRoles(userRoles);
     }
 
     @Override
-    public void addUser(User user, String[] roles) {
-        assignRolesToUser(user, roles);
+    public void addUser(User user) {
+        createCyclicReference(user);
         userDao.save(user);
     }
 
