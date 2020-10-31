@@ -1,22 +1,36 @@
 package web.springbootcrud.service;
 
 import org.springframework.stereotype.Service;
+import web.springbootcrud.dao.RoleDao;
 import web.springbootcrud.dao.UserDao;
+import web.springbootcrud.model.Role;
 import web.springbootcrud.model.User;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final RoleDao roleDao;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, RoleDao roleDao) {
         this.userDao = userDao;
+        this.roleDao = roleDao;
+    }
+
+    private void assignRolesToUser(User user, String[] roles){
+        Set<Role> userRoles = new HashSet<>();
+        for (String role: roles){
+            Role userRole = roleDao.findByName(role);
+
+        }
+        user.setRoles(userRoles);
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user, String[] roles) {
+        assignRolesToUser(user, roles);
         userDao.save(user);
     }
 
@@ -47,6 +61,28 @@ public class UserServiceImpl implements UserService {
         return userDao.findAll();
     }
 
+    @Override
+    public Map<String, Boolean> listRoles() {
+        Map<String, Boolean> roleBooleanMap = new HashMap<>();
+        Boolean userHasRole = true;
+        for (Role role: roleDao.findAll()){
+            roleBooleanMap.put(role.getName(), userHasRole);
+            userHasRole = false;
+        }
+        return roleBooleanMap;
+    }
 
+    @Override
+    public Map<String, Boolean> getRolesByUserId(Long id) {
+        Map<String, Boolean> roleBooleanMap = new HashMap<>();
 
+        for (Role role: roleDao.findAll()){
+            Boolean userHasRole = getUserById(id)
+                    .getRoles()
+                    .toString()
+                    .contains(role.getName());
+            roleBooleanMap.put(role.getName(), userHasRole);
+        }
+        return roleBooleanMap;
+    }
 }

@@ -32,7 +32,9 @@ function readToModal(id){
             user.roles.forEach(
                 role =>
                 {
-                    let selectorQuery = '#editRoleSelector option:contains(' + role + ')';
+                    let roleName = role.name.substring(5);
+                    console.log(roleName);
+                    let selectorQuery = '#editRoleSelector option:contains(' + roleName + ')';
                     $(selectorQuery).prop('selected', true);
                 })
 
