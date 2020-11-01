@@ -1,5 +1,6 @@
 package web.springbootcrud.model;
 
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
 
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.REFRESH)
     private Set<User> users;
@@ -45,6 +47,7 @@ public class Role implements GrantedAuthority {
         this.users = users;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthority() {
        return name;

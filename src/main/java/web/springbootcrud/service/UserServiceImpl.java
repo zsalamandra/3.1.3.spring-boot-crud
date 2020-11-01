@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
-        createCyclicReference(user);
+       // createCyclicReference(user);
         userDao.save(user);
     }
 
@@ -62,14 +62,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Boolean> listRoles() {
-        Map<String, Boolean> roleBooleanMap = new HashMap<>();
-        Boolean userHasRole = true;
-        for (Role role: roleDao.findAll()){
-            roleBooleanMap.put(role.getName(), userHasRole);
-            userHasRole = false;
-        }
-        return roleBooleanMap;
+    public List<Role> listRoles() {
+//        Map<String, Boolean> roleBooleanMap = new HashMap<>();
+//        Boolean userHasRole = true;
+//        for (Role role: roleDao.findAll()){
+//            roleBooleanMap.put(role.getName(), userHasRole);
+//            userHasRole = false;
+//        }
+        return roleDao.findAll();
     }
 
     @Override

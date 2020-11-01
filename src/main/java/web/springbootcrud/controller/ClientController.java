@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import web.springbootcrud.model.Role;
 import web.springbootcrud.model.User;
 import web.springbootcrud.service.UserService;
 
@@ -36,10 +37,18 @@ public class ClientController {
     }
 
     @GetMapping(value = "/api/v1/users")
-    public ResponseEntity<List<User>> readAll() {
+    public ResponseEntity<List<User>> readAllUsers() {
         final List<User> users = service.listUsers();
         return users != null &&  !users.isEmpty()
                 ? new ResponseEntity<>(users, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/api/v1/roles")
+    public ResponseEntity<List<Role>> readAllRoles() {
+        final List<Role> roles = service.listRoles();
+        return roles != null &&  !roles.isEmpty()
+                ? new ResponseEntity<>(roles, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -53,7 +62,7 @@ public class ClientController {
 
     @PutMapping(value = "/api/v1/users/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody User user) {
-        user.setId(id);
+//        user.setId(id);
         service.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

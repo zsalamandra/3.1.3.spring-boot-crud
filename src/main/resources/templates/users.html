@@ -21,14 +21,17 @@
         <div class="row container" style="margin: 0px; padding: 0px; min-width: 100%">
             <div class="col-md-3 col-xl-2" style="background: white; padding: 0px; height: 90vh">
                 <div class="list-group list-group-flush">
-                    <a href="#adminpage" id="admin-page-select" class="list-group-item active" data-toggle="pill">ADMIN</a>
-                    <a href="#userinfopage" id="user-form-select" class="list-group-item" data-toggle="pill" >USER</a>
+                    <a href="#adminpage" id="admin-page-select" class="list-group-item active" data-toggle="pill"
+                       th:if="${not #lists.contains(authentication.getAuthorities(),'ROLE_ADMIN')}">ADMIN</a>
+
+                    <a href="#userinfopage" id="user-form-select"
+                       th:class="${not #lists.contains(authentication.getAuthorities(),'ROLE_ADMIN')} ? 'list-group-item' : 'list-group-item active'" data-toggle="pill" >USER</a>
                 </div>
             </div>
             <div class="col-md-9 col-xl-10 " style="background: #f8f9fb">
 
 <!--                ADMIN PANEL-->
-                <div id="adminpage" class="container" style="padding: 0px; min-width: 100%"  >
+                <div id="adminpage" class="container" style="padding: 0px; min-width: 100%" th:if="${not #lists.contains(authentication.getAuthorities(),'ROLE_ADMIN')}">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4> Admin Panel </h4>
@@ -92,8 +95,8 @@
                                                     <div class="form-group text-left">
                                                         <label>Role</label>
                                                         <select id="nu-select" class="custom-select" multiple= required="required">
-                                                            <option value="USER" selected>USER</option>
-                                                            <option value="ADMIN">ADMIN</option>
+                                                            <option id=1 value="USER" selected>USER</option>
+                                                            <option id=2 value="ADMIN">ADMIN</option>
                                                         </select>
                                                     </div>
                                                     <button type="submit" class="btn btn-outline-info" onclick="addUser()">Add new user</button>
@@ -109,7 +112,9 @@
 
 
 <!--                USER INFORMATION PAGE-->
-                <div id="userinfopage" class="container collapse in" style="padding: 0px; min-width: 100%">
+                <div id="userinfopage"
+                     th:class="${not #lists.contains(authentication.getAuthorities(),'ROLE_ADMIN')} ? 'container collapse' : 'container'"
+                     style="padding: 0px; min-width: 100%">
                     <div class="panel-heading">
                         <h4> User information-page </h4>
                     </div>

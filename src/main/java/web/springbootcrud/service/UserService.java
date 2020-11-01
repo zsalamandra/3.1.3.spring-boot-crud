@@ -1,5 +1,6 @@
 package web.springbootcrud.service;
 
+import web.springbootcrud.model.Role;
 import web.springbootcrud.model.User;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface UserService {
     void removeUser(Long id);
     User getUserById(Long id);
     List<User> listUsers();
-    Map<String, Boolean> listRoles();
+    List<Role> listRoles();
     Map<String, Boolean> getRolesByUserId(Long id);
     User getUserByName(String username);
 }
