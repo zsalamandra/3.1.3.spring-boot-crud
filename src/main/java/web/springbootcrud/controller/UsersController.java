@@ -25,7 +25,8 @@ public class UsersController {
 //    ************ USERS LIST ***********************
     @GetMapping(value = "/adm/users")
     public String index(Model model, Authentication authentication) {
-        model.addAttribute("authentication", authentication);
+        boolean isAdmin = authentication.getAuthorities().contains("ROLE_ADMIN");
+        model.addAttribute("isAdmin", isAdmin);
 //        User user = userService.getUserByName(authentication.getName());
 //        model.addAttribute("currentuser", user);
 //        передается новоиспеченный пользователь, данный пользователь будет получен
@@ -86,7 +87,8 @@ public class UsersController {
 
     @GetMapping("/UserProfile/{id}")
     public String show(Model model, @PathVariable("id") Long id, Authentication authentication) {
-        model.addAttribute("authentication", authentication);
+        boolean isAdmin = authentication.getAuthorities().contains("ROLE_ADMIN");
+        model.addAttribute("isAdmin", isAdmin);
         return "users";
     }
 }

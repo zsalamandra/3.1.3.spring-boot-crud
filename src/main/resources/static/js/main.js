@@ -2,10 +2,10 @@
     возвращенный результат (Boolean):
 0: обычный юзер
 1: ADMIN*/
-function readNavBarData() {
+async function readNavBarData() {
     let urlFoFetch = '/api/v1/current-user';
     let userRoles = '';
-    fetch(urlFoFetch)
+    await fetch(urlFoFetch)
         .then(response => response.json())
         .then(user => {
             $('#user-name-on-navbar').html(user.name);
@@ -19,11 +19,8 @@ function readNavBarData() {
             );
             $('#user-info_table').append(rowStr);
         });
-
-    let result = userRoles.indexOf('ADMIN') > -1 ;
-    console.log(userRoles);
-    console.log(result);
-    return true;
+    let result = userRoles.indexOf('ADMIN') > -1;
+    return result;
 }
 
 
@@ -165,12 +162,13 @@ function modalCmdButtonHandler(){
 
 jQuery(function () {
 
-    let isAdmin = readNavBarData();
+    readNavBarData().then(
+        isAdmin => {
+            readToTable();
+            console.log('Current user roles include role - ADMIN');
+        }
+    );
 
-    if (isAdmin) {
-        readToTable();
-        console.log('Current user roles include role - ADMIN');
-    }
 
 
 
