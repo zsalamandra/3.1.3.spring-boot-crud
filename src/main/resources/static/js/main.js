@@ -98,6 +98,7 @@ async function addUser(){
 
     // Подготовка JSON запроса
     const jsonString = JSON.stringify({
+        //id не должно быть
         name: username,
         password: password,
         roles: roles
