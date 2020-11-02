@@ -22,16 +22,16 @@
             <div class="col-md-3 col-xl-2" style="background: white; padding: 0px; height: 90vh">
                 <div class="list-group list-group-flush">
                     <a href="#adminpage" id="admin-page-select" class="list-group-item active" data-toggle="pill"
-                       th:if="${not isAdmin}">ADMIN</a>
+                       th:if="${isAdmin}">ADMIN</a>
 
                     <a href="#userinfopage" id="user-form-select"
-                       th:class="${not isAdmin} ? 'list-group-item' : 'list-group-item active'" data-toggle="pill" >USER</a>
+                       th:class="${isAdmin} ? 'list-group-item' : 'list-group-item active'" data-toggle="pill" >USER</a>
                 </div>
             </div>
             <div class="col-md-9 col-xl-10 " style="background: #f8f9fb">
 
 <!--                ADMIN PANEL-->
-                <div id="adminpage" class="container" style="padding: 0px; min-width: 100%">
+                <div id="adminpage" class="container" style="padding: 0px; min-width: 100%" th:if="${isAdmin}">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4> Admin Panel </h4>
@@ -113,7 +113,7 @@
 
 <!--                USER INFORMATION PAGE-->
                 <div id="userinfopage"
-                     th:class="${not isAdmin} ? 'container collapse' : 'container'"
+                     th:class="${isAdmin} ? 'container collapse' : 'container'"
                      style="padding: 0px; min-width: 100%">
                     <div class="panel-heading">
                         <h4> User information-page </h4>

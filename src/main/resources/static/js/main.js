@@ -171,7 +171,6 @@ jQuery(function () {
 
 
 
-
     // при закрытии модалки читаем данные в таблицу
     $("#showModal").on('hidden.bs.modal', function (event) {
         readToTable();
@@ -196,5 +195,5 @@ function getSelectedItems(select){
     return Array.from(select.options)
         .filter(item => item.selected)
         .map(item => ({id: item.id,
-                       name: 'ROLE_' + item.value}))
+                       name: item.value}))
 }

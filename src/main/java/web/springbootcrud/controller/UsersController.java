@@ -2,6 +2,8 @@ package web.springbootcrud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,9 @@ import web.springbootcrud.model.User;
 import web.springbootcrud.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UsersController {
@@ -25,15 +30,9 @@ public class UsersController {
 //    ************ USERS LIST ***********************
     @GetMapping(value = "/adm/users")
     public String index(Model model, Authentication authentication) {
-        boolean isAdmin = authentication.getAuthorities().contains("ROLE_ADMIN");
+        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        boolean isAdmin = roles.contains("ROLE_ADMIN");
         model.addAttribute("isAdmin", isAdmin);
-//        User user = userService.getUserByName(authentication.getName());
-//        model.addAttribute("currentuser", user);
-//        передается новоиспеченный пользователь, данный пользователь будет получен
-//                в методе POST для сохранения
-//        model.addAttribute("newuser", new User());
-//        передаем всех юзеров для отображения в таблице
-//        model.addAttribute("users", userService.listUsers());
         return "users";
     }
 
@@ -87,7 +86,9 @@ public class UsersController {
 
     @GetMapping("/UserProfile/{id}")
     public String show(Model model, @PathVariable("id") Long id, Authentication authentication) {
-        boolean isAdmin = authentication.getAuthorities().contains("ROLE_ADMIN");
+
+        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        boolean isAdmin = roles.contains("ROLE_ADMIN");
         model.addAttribute("isAdmin", isAdmin);
         return "users";
     }
