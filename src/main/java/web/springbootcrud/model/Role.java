@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 // Этот класс реализует интерфейс GrantedAuthority, в котором необходимо переопределить только один метод getAuthority() (возвращает имя роли).
@@ -28,7 +29,8 @@ public class Role implements GrantedAuthority {
     public Role(Long id, String name, User owner) {
         this.id = id;
         this.name = name;
-        this.users = Set.of(owner);
+        this.users = new HashSet<>();
+        this.users.add(owner);
     }
 
     public String getName() {
